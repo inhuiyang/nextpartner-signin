@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>회원가입 — 넥스트파트너</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="dist/index.css" />
+</head>
+<body class="font-base bg-neutral-50 min-h-screen flex flex-col">
+
+  <!-- ── App Bar ── -->
+  <header class="np-app-bar sticky top-0 z-10">
+    <button id="btn-back" class="np-app-bar-btn" aria-label="뒤로 가기" style="visibility:hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <span class="np-app-bar-title-center">회원가입</span>
+    <div class="w-10 h-10 shrink-0" aria-hidden="true"></div>
+  </header>
+
+  <!-- ── Step Indicator ── -->
+  <div id="step-indicator" class="hidden bg-neutral-0 border-b border-neutral-200 px-4 py-4">
+    <div class="flex items-start max-w-xs mx-auto">
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div id="s1-dot"
+          class="w-8 h-8 rounded-full bg-primary-500 text-neutral-0 flex items-center justify-center text-base font-bold">1</div>
+        <span id="s1-label" class="text-xs font-medium text-primary-500">계정 설정</span>
+      </div>
+      <div id="step-line" class="flex-1 h-px bg-neutral-200 mt-4 mx-3"></div>
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div id="s2-dot"
+          class="w-8 h-8 rounded-full bg-neutral-200 text-neutral-400 flex items-center justify-center text-base font-bold">2</div>
+        <span id="s2-label" class="text-xs font-medium text-neutral-400">본인 인증</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Content ── -->
+  <main class="flex-1 flex flex-col md:items-center md:justify-center md:py-12 md:px-4">
+    <div class="w-full md:max-w-[480px] md:bg-neutral-0 md:rounded-card md:shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
+
+      <!-- ╔══ Panel 1: 가입 방법 선택 ══╗ -->
+      <div id="p-method" class="px-4 py-8 md:px-8 md:py-10">
+        <div class="flex items-center justify-center gap-2 mb-8">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M16 2L28.7 9.5V24.5L16 32L3.3 24.5V9.5L16 2Z" fill="#ff7f65"/>
+            <path d="M11 10h2.5l5 12H16l-1.2-3H10l-1.2 3H6.5L11 10Zm2.8 7-1.8-4.5L10.2 17h3.6Z" fill="white"/>
+          </svg>
+          <span class="text-xl font-bold text-neutral-900 tracking-tight">NextPartner</span>
+        </div>
+
+        <p class="text-center text-lg text-neutral-600 leading-relaxed mb-8">가입 방법을 선택해 주세요.</p>
+
+        <!-- Kakao -->
+        <button id="btn-kakao" class="w-full np-btn np-btn-lg mb-3"
+          style="background-color:#FEE500; color:#191919; border-color:#FEE500;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M10 1.5C5.03 1.5 1 4.86 1 9c0 2.73 1.74 5.12 4.36 6.5L4.2 19l4.5-2.55c.43.06.86.09 1.3.09 4.97 0 9-3.36 9-7.5S14.97 1.5 10 1.5z"
+              fill="#191919"/>
+          </svg>
+          카카오로 시작하기
+        </button>
+
+        <!-- Naver -->
+        <button id="btn-naver" class="w-full np-btn np-btn-lg mb-8"
+          style="background-color:#03C75A; color:#ffffff; border-color:#03C75A;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M10.26 9.27L6.6 3.6H3.6v10.8h4.14V9.73l3.66 5.67H14.4V3.6h-4.14v5.67z" fill="white"/>
+          </svg>
+          네이버로 시작하기
+        </button>
+
+        <div class="flex items-center gap-4 mb-8" role="separator">
+          <div class="flex-1 h-px bg-neutral-200"></div>
+          <span class="text-base text-neutral-400 shrink-0">또는</span>
+          <div class="flex-1 h-px bg-neutral-200"></div>
+        </div>
+
+        <button id="btn-start-email" class="w-full np-btn np-btn-lg np-btn-grey-stroke">
+          일반 가입하기
+        </button>
+
+        <p class="text-center text-base text-neutral-400 mt-10 leading-relaxed">
+          이미 계정이 있으신가요?&#8202;
+          <a href="login.html" class="text-primary-500 font-semibold">로그인</a>
+        </p>
+      </div>
+
+      <!-- ╔══ Panel 2 (Step 1/2): 계정 정보 설정 ══╗ -->
+      <div id="p-account" class="hidden px-4 py-8 md:px-8 md:py-10">
+        <h2 class="text-2xl font-bold text-neutral-900 mb-2">계정 설정</h2>
+        <p class="text-lg text-neutral-600 leading-relaxed mb-8">
+          이름, 아이디, 비밀번호를 설정해 주세요.
+        </p>
+
+        <div class="flex flex-col gap-6">
+
+          <!-- 이름 -->
+          <div class="np-textfield-wrap">
+            <label class="np-textfield-label" for="inp-name">
+              이름 <span class="text-primary-500" aria-hidden="true">*</span>
+            </label>
+            <input class="np-textfield" id="inp-name"
+              type="text" placeholder="홍길동"
+              autocomplete="name" aria-required="true" />
+          </div>
+
+          <!-- 아이디 -->
+          <div class="np-textfield-wrap">
+            <label class="np-textfield-label" for="inp-id">
+              아이디 <span class="text-primary-500" aria-hidden="true">*</span>
+            </label>
+            <input class="np-textfield" id="inp-id"
+              type="text" placeholder="영문 소문자·숫자 6~20자"
+              autocomplete="username" aria-required="true"
+              autocapitalize="none" />
+            <span id="id-hint" class="np-textfield-hint">영문 소문자와 숫자만 사용, 6~20자</span>
+            <span id="id-err" class="np-textfield-hint-error hidden" role="alert">
+              아이디 형식이 맞지 않습니다. (영문 소문자·숫자 6~20자)
+            </span>
+          </div>
+
+          <!-- 비밀번호 -->
+          <div class="np-textfield-wrap">
+            <label class="np-textfield-label" for="inp-pw">
+              비밀번호 <span class="text-primary-500" aria-hidden="true">*</span>
+            </label>
+            <div class="np-textfield-password-wrap">
+              <input class="np-textfield" id="inp-pw"
+                type="password" placeholder="영문·숫자 포함 8자 이상"
+                autocomplete="new-password" aria-required="true" />
+              <button type="button" id="toggle-pw"
+                class="np-textfield-pw-toggle"
+                aria-label="비밀번호 표시/숨김">
+                <svg id="icon-pw-off" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg id="icon-pw-on" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </div>
+            <span id="pw-hint" class="np-textfield-hint">영문, 숫자를 포함하여 8자 이상 입력해 주세요</span>
+            <span id="pw-err" class="np-textfield-hint-error hidden" role="alert">
+              비밀번호는 8자 이상이어야 합니다.
+            </span>
+          </div>
+
+          <!-- 비밀번호 확인 -->
+          <div class="np-textfield-wrap">
+            <label class="np-textfield-label" for="inp-pw-confirm">
+              비밀번호 확인 <span class="text-primary-500" aria-hidden="true">*</span>
+            </label>
+            <div class="np-textfield-password-wrap">
+              <input class="np-textfield" id="inp-pw-confirm"
+                type="password" placeholder="비밀번호를 한 번 더 입력해 주세요"
+                autocomplete="new-password" aria-required="true" />
+              <button type="button" id="toggle-pw-confirm"
+                class="np-textfield-pw-toggle"
+                aria-label="비밀번호 확인 표시/숨김">
+                <svg id="icon-pwc-off" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg id="icon-pwc-on" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </div>
+            <span id="pwc-err" class="np-textfield-hint-error hidden" role="alert">
+              비밀번호가 일치하지 않습니다.
+            </span>
+          </div>
+
+        </div>
+
+        <button id="btn-to-verify" class="w-full np-btn np-btn-lg np-btn-primary mt-8" disabled>
+          다음
+        </button>
+      </div>
+
+      <!-- ╔══ Panel 3 (Step 2/2): 휴대폰 본인 인증 ══╗ -->
+      <div id="p-verify" class="hidden px-4 py-8 md:px-8 md:py-10">
+        <h2 class="text-2xl font-bold text-neutral-900 mb-2">본인 인증</h2>
+        <p class="text-lg text-neutral-600 leading-relaxed mb-8">
+          휴대폰으로 본인 인증을 완료해 주세요.
+        </p>
+
+        <div class="flex flex-col gap-6">
+
+          <!-- 휴대폰 번호 + 인증번호 요청 버튼 -->
+          <div class="np-textfield-wrap">
+            <label class="np-textfield-label" for="inp-phone">
+              휴대폰 번호 <span class="text-primary-500" aria-hidden="true">*</span>
+            </label>
+            <div class="flex gap-2 items-end">
+              <div class="flex-1 min-w-0">
+                <input class="np-textfield" id="inp-phone"
+                  type="tel" placeholder="010-0000-0000"
+                  inputmode="numeric" autocomplete="tel"
+                  aria-required="true" />
+              </div>
+              <button id="btn-send-otp"
+                class="np-btn np-btn-secondary shrink-0 whitespace-nowrap"
+                style="height:56px; padding-left:20px; padding-right:20px; font-size:1.125rem;"
+                disabled>
+                인증번호 받기
+              </button>
+            </div>
+            <span class="np-textfield-hint">숫자만 입력하면 형식이 자동으로 맞춰집니다</span>
+          </div>
+
+          <!-- 인증번호 입력 (전송 후 표시) -->
+          <div id="otp-section" class="np-textfield-wrap hidden">
+            <label class="np-textfield-label" for="inp-otp">인증번호</label>
+            <div class="relative">
+              <input class="np-textfield" id="inp-otp"
+                type="text" placeholder="인증번호 6자리"
+                maxlength="6" inputmode="numeric" pattern="[0-9]*"
+                autocomplete="one-time-code"
+                style="padding-right:5.5rem" />
+              <span id="timer-el"
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-lg font-bold text-primary-500 pointer-events-none tabular-nums"
+                aria-live="polite" aria-label="남은 시간">
+                03:00
+              </span>
+            </div>
+            <p id="otp-err" class="np-textfield-hint-error hidden" role="alert">
+              인증번호가 맞지 않습니다. 다시 확인해 주세요.
+            </p>
+            <p class="np-textfield-hint mt-1">
+              인증번호가 오지 않으면&nbsp;
+              <button id="btn-resend"
+                class="text-primary-500 font-semibold underline underline-offset-2">
+                다시 받기
+              </button>
+            </p>
+          </div>
+
+        </div>
+
+        <button id="btn-complete" class="w-full np-btn np-btn-lg np-btn-primary mt-8" disabled>
+          가입 완료
+        </button>
+      </div>
+
+      <!-- ╔══ Panel 4: 가입 완료 ══╗ -->
+      <div id="p-success" class="hidden px-4 py-12 md:px-8 md:py-16 text-center">
+        <div class="w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center mx-auto mb-6"
+          aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M8 18l7 7 13-14" stroke="#ff7f65" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-neutral-900 mb-3">가입이 완료됐습니다!</h2>
+        <p class="text-lg text-neutral-600 leading-relaxed mb-10">
+          넥스트파트너에 오신 것을 환영합니다.<br>
+          지금 바로 나에게 맞는 일자리를 찾아보세요.
+        </p>
+        <button id="btn-goto-home" class="w-full np-btn np-btn-lg np-btn-primary">
+          일자리 찾아보기
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-wrap" class="np-toast-wrap" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const $ = id => document.getElementById(id);
+
+      // ── DOM refs ──────────────────────────────────────────────────
+      const btnBack       = $('btn-back');
+      const btnKakao      = $('btn-kakao');
+      const btnNaver      = $('btn-naver');
+      const btnStartEmail = $('btn-start-email');
+      const btnToVerify   = $('btn-to-verify');
+      const btnSendOtp    = $('btn-send-otp');
+      const btnResend     = $('btn-resend');
+      const btnComplete   = $('btn-complete');
+      const btnGotoHome   = $('btn-goto-home');
+
+      const pMethod   = $('p-method');
+      const pAccount  = $('p-account');
+      const pVerify   = $('p-verify');
+      const pSuccess  = $('p-success');
+      const stepInd   = $('step-indicator');
+      const s1Dot     = $('s1-dot');
+      const s1Label   = $('s1-label');
+      const s2Dot     = $('s2-dot');
+      const s2Label   = $('s2-label');
+      const stepLine  = $('step-line');
+
+      const inpName      = $('inp-name');
+      const inpId        = $('inp-id');
+      const inpPw        = $('inp-pw');
+      const inpPwConfirm = $('inp-pw-confirm');
+      const inpPhone     = $('inp-phone');
+      const inpOtp       = $('inp-otp');
+
+      const idErr    = $('id-err');
+      const idHint   = $('id-hint');
+      const pwErr    = $('pw-err');
+      const pwcErr   = $('pwc-err');
+      const otpSection = $('otp-section');
+      const otpErr   = $('otp-err');
+      const timerEl  = $('timer-el');
+      const toastWrap = $('toast-wrap');
+
+      // ── State ────────────────────────────────────────────────────
+      let cur = 'method';
+      let timerSecs = 180;
+      let timerHandle = null;
+      let otpSent = false;
+
+      const PANELS = { method: pMethod, account: pAccount, verify: pVerify, success: pSuccess };
+
+      // ── Panel navigation ─────────────────────────────────────────
+      function showPanel(name) {
+        Object.entries(PANELS).forEach(([k, el]) => el.classList.toggle('hidden', k !== name));
+        cur = name;
+
+        btnBack.style.visibility = (name === 'method' || name === 'success') ? 'hidden' : 'visible';
+
+        if (name === 'account' || name === 'verify') {
+          stepInd.classList.remove('hidden');
+          const isAccount = name === 'account';
+          s1Dot.className   = `w-8 h-8 rounded-full flex items-center justify-center text-base font-bold ${isAccount ? 'bg-primary-500 text-neutral-0' : 'bg-primary-100 text-primary-500'}`;
+          s1Label.className = `text-xs font-medium ${isAccount ? 'text-primary-500' : 'text-primary-300'}`;
+          s2Dot.className   = `w-8 h-8 rounded-full flex items-center justify-center text-base font-bold ${!isAccount ? 'bg-primary-500 text-neutral-0' : 'bg-neutral-200 text-neutral-400'}`;
+          s2Label.className = `text-xs font-medium ${!isAccount ? 'text-primary-500' : 'text-neutral-400'}`;
+          stepLine.className = `flex-1 h-px mt-4 mx-3 ${!isAccount ? 'bg-primary-300' : 'bg-neutral-200'}`;
+        } else {
+          stepInd.classList.add('hidden');
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ── Back ─────────────────────────────────────────────────────
+      btnBack.addEventListener('click', () => {
+        if (cur === 'account') showPanel('method');
+        if (cur === 'verify')  { stopTimer(); showPanel('account'); }
+      });
+
+      // ── Social ───────────────────────────────────────────────────
+      btnKakao.addEventListener('click', () => showToast('카카오 OAuth 연동이 필요합니다.'));
+      btnNaver.addEventListener('click', () => showToast('네이버 OAuth 연동이 필요합니다.'));
+
+      // ── Step 1: 계정 정보 ─────────────────────────────────────────
+      btnStartEmail.addEventListener('click', () => showPanel('account'));
+
+      // 이름
+      inpName.addEventListener('input', validateAccount);
+
+      // 아이디
+      inpId.addEventListener('input', () => {
+        const val = inpId.value;
+        const valid = /^[a-z0-9]{6,20}$/.test(val);
+        const hasInput = val.length > 0;
+
+        if (hasInput && !valid) {
+          idErr.classList.remove('hidden');
+          idHint.classList.add('hidden');
+          inpId.classList.add('np-textfield-error');
+        } else {
+          idErr.classList.add('hidden');
+          idHint.classList.remove('hidden');
+          inpId.classList.remove('np-textfield-error');
+        }
+        validateAccount();
+      });
+
+      // 비밀번호
+      inpPw.addEventListener('input', () => {
+        const val = inpPw.value;
+        const tooShort = val.length > 0 && val.length < 8;
+
+        pwErr.classList.toggle('hidden', !tooShort);
+        inpPw.classList.toggle('np-textfield-error', tooShort);
+
+        // 확인 필드와의 불일치도 재검사
+        validateConfirm();
+        validateAccount();
+      });
+
+      // 비밀번호 확인
+      inpPwConfirm.addEventListener('input', () => {
+        validateConfirm();
+        validateAccount();
+      });
+
+      function validateConfirm() {
+        const mismatch = inpPwConfirm.value.length > 0 && inpPw.value !== inpPwConfirm.value;
+        pwcErr.classList.toggle('hidden', !mismatch);
+        inpPwConfirm.classList.toggle('np-textfield-error', mismatch);
+      }
+
+      function validateAccount() {
+        const nameOk = inpName.value.trim().length >= 2;
+        const idOk   = /^[a-z0-9]{6,20}$/.test(inpId.value);
+        const pwOk   = inpPw.value.length >= 8;
+        const pwcOk  = inpPw.value === inpPwConfirm.value && inpPwConfirm.value.length > 0;
+        btnToVerify.disabled = !(nameOk && idOk && pwOk && pwcOk);
+      }
+
+      // 비밀번호 표시/숨김 토글
+      function makeToggle(btnId, inputId, offIconId, onIconId) {
+        $(btnId).addEventListener('click', () => {
+          const inp = $(inputId);
+          const isHidden = inp.type === 'password';
+          inp.type = isHidden ? 'text' : 'password';
+          $(offIconId).classList.toggle('hidden', isHidden);
+          $(onIconId).classList.toggle('hidden', !isHidden);
+        });
+      }
+      makeToggle('toggle-pw',         'inp-pw',         'icon-pw-off',  'icon-pw-on');
+      makeToggle('toggle-pw-confirm', 'inp-pw-confirm', 'icon-pwc-off', 'icon-pwc-on');
+
+      // ── Step 2: 본인 인증 ─────────────────────────────────────────
+      btnToVerify.addEventListener('click', () => {
+        // 인증 패널 초기화
+        inpPhone.value = '';
+        inpPhone.disabled = false;
+        inpOtp.value = '';
+        otpSection.classList.add('hidden');
+        otpErr.classList.add('hidden');
+        inpOtp.classList.remove('np-textfield-error');
+        btnSendOtp.textContent = '인증번호 받기';
+        btnSendOtp.disabled = true;
+        btnComplete.disabled = true;
+        otpSent = false;
+        stopTimer();
+        timerEl.style.color = '';
+        showPanel('verify');
+      });
+
+      // 휴대폰 번호 자동 포맷
+      inpPhone.addEventListener('input', e => {
+        const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+        e.target.value = d.length > 7 ? `${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}`
+                       : d.length > 3 ? `${d.slice(0,3)}-${d.slice(3)}`
+                       : d;
+        btnSendOtp.disabled = d.length < 10;
+      });
+
+      // 인증번호 전송
+      btnSendOtp.addEventListener('click', () => {
+        otpSent = true;
+        inpPhone.disabled = true;
+        btnSendOtp.textContent = '재전송';
+        inpOtp.value = '';
+        otpErr.classList.add('hidden');
+        inpOtp.classList.remove('np-textfield-error');
+        btnComplete.disabled = true;
+        otpSection.classList.remove('hidden');
+        timerEl.style.color = '';
+        startTimer();
+        if (inpOtp) inpOtp.focus();
+        showToast(`${inpPhone.value}으로 인증번호를 전송했습니다.`);
+      });
+
+      // 다시 받기
+      btnResend.addEventListener('click', () => {
+        inpOtp.value = '';
+        otpErr.classList.add('hidden');
+        inpOtp.classList.remove('np-textfield-error');
+        btnComplete.disabled = true;
+        timerEl.style.color = '';
+        startTimer();
+        showToast('인증번호를 다시 전송했습니다.');
+      });
+
+      // 인증번호 입력
+      inpOtp.addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+        otpErr.classList.add('hidden');
+        inpOtp.classList.remove('np-textfield-error');
+        btnComplete.disabled = e.target.value.length !== 6;
+      });
+
+      // 가입 완료
+      btnComplete.addEventListener('click', () => {
+        // Demo: 000000은 오류 처리, 나머지 6자리는 인증 성공
+        if (inpOtp.value === '000000') {
+          otpErr.classList.remove('hidden');
+          inpOtp.classList.add('np-textfield-error');
+          return;
+        }
+        stopTimer();
+        showPanel('success');
+      });
+
+      btnGotoHome.addEventListener('click', () => {
+        window.location.href = 'index.html';
+      });
+
+      // ── Timer ────────────────────────────────────────────────────
+      function startTimer() {
+        stopTimer();
+        timerSecs = 180;
+        updateTimerDisplay();
+        timerHandle = setInterval(() => {
+          timerSecs--;
+          if (timerSecs <= 0) {
+            stopTimer();
+            timerEl.textContent = '시간 초과';
+            timerEl.style.color = '#f44336';
+          } else {
+            updateTimerDisplay();
+          }
+        }, 1000);
+      }
+
+      function stopTimer() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+      }
+
+      function updateTimerDisplay() {
+        const m = String(Math.floor(timerSecs / 60)).padStart(2, '0');
+        const s = String(timerSecs % 60).padStart(2, '0');
+        timerEl.textContent = `${m}:${s}`;
+      }
+
+      // ── Toast ────────────────────────────────────────────────────
+      function showToast(msg) {
+        const el = document.createElement('div');
+        el.className = 'np-toast';
+        el.textContent = msg;
+        toastWrap.appendChild(el);
+        setTimeout(() => el.remove(), 3000);
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
