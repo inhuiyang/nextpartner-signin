@@ -128,6 +128,25 @@
     @apply bg-neutral-50 text-neutral-400 cursor-not-allowed;
   }
 
+  /* ── Password Field (텍스트필드 + 표시/숨김 토글) ── */
+  .np-textfield-password-wrap {
+    @apply relative;
+  }
+  .np-textfield-password-wrap .np-textfield {
+    padding-right: 3.5rem;
+  }
+  .np-textfield-pw-toggle {
+    @apply absolute right-3 top-1/2 -translate-y-1/2
+           flex items-center justify-center w-8 h-8
+           text-neutral-400 rounded-button cursor-pointer
+           hover:text-neutral-700
+           transition-colors duration-[120ms] ease-out
+           bg-transparent border-none select-none;
+  }
+  .np-textfield-pw-toggle:focus-visible {
+    @apply outline-none shadow-[0_0_0_3px_rgba(255,184,159,0.35)];
+  }
+
   /* ── Checkbox ── */
   .np-checkbox {
     @apply inline-flex items-center gap-3 cursor-pointer select-none;
