@@ -23,17 +23,23 @@
 
   <!-- ── Step Indicator ── -->
   <div id="step-indicator" class="hidden bg-neutral-0 border-b border-neutral-200 px-4 py-4">
-    <div class="flex items-start max-w-xs mx-auto">
+    <div class="flex items-start max-w-sm mx-auto">
       <div class="flex flex-col items-center gap-1 shrink-0">
         <div id="s1-dot"
           class="w-8 h-8 rounded-full bg-primary-500 text-neutral-0 flex items-center justify-center text-base font-bold">1</div>
         <span id="s1-label" class="text-xs font-medium text-primary-500">계정 설정</span>
       </div>
-      <div id="step-line" class="flex-1 h-px bg-neutral-200 mt-4 mx-3"></div>
+      <div id="step-line-1" class="flex-1 h-px bg-neutral-200 mt-4 mx-2"></div>
       <div class="flex flex-col items-center gap-1 shrink-0">
         <div id="s2-dot"
           class="w-8 h-8 rounded-full bg-neutral-200 text-neutral-400 flex items-center justify-center text-base font-bold">2</div>
         <span id="s2-label" class="text-xs font-medium text-neutral-400">본인 인증</span>
+      </div>
+      <div id="step-line-2" class="flex-1 h-px bg-neutral-200 mt-4 mx-2"></div>
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div id="s3-dot"
+          class="w-8 h-8 rounded-full bg-neutral-200 text-neutral-400 flex items-center justify-center text-base font-bold">3</div>
+        <span id="s3-label" class="text-xs font-medium text-neutral-400">약관 동의</span>
       </div>
     </div>
   </div>
@@ -251,11 +257,71 @@
         </div>
 
         <button id="btn-complete" class="w-full np-btn np-btn-lg np-btn-primary mt-8" disabled>
+          다음
+        </button>
+      </div>
+
+      <!-- ╔══ Panel 4 (Step 3/3): 약관 동의 ══╗ -->
+      <div id="p-terms" class="hidden px-4 py-8 md:px-8 md:py-10">
+        <h2 class="text-2xl font-bold text-neutral-900 mb-2">약관 동의</h2>
+        <p class="text-lg text-neutral-600 leading-relaxed mb-8">
+          서비스 이용을 위한 약관에 동의해 주세요.
+        </p>
+
+        <div class="flex flex-col gap-4">
+
+          <!-- 전체 동의 -->
+          <label class="np-checkbox flex items-center gap-3 p-4 rounded-card border border-neutral-200 bg-neutral-50 cursor-pointer">
+            <input type="checkbox" id="chk-all" class="np-checkbox-input" />
+            <span class="np-checkbox-label text-lg font-semibold text-neutral-900">전체 동의</span>
+          </label>
+
+          <div class="np-divider"></div>
+
+          <!-- 서비스 이용약관 -->
+          <div class="flex items-center justify-between gap-2">
+            <label class="np-checkbox flex items-center gap-3 cursor-pointer flex-1 min-w-0">
+              <input type="checkbox" id="chk-service" class="np-checkbox-input shrink-0" />
+              <span class="np-checkbox-label text-base text-neutral-800 leading-relaxed">
+                <span class="text-primary-500 font-semibold">[필수]</span> 서비스 이용약관 동의
+              </span>
+            </label>
+            <button type="button" class="text-base text-neutral-400 underline underline-offset-2 shrink-0"
+              aria-label="서비스 이용약관 보기">보기</button>
+          </div>
+
+          <!-- 개인정보 처리방침 -->
+          <div class="flex items-center justify-between gap-2">
+            <label class="np-checkbox flex items-center gap-3 cursor-pointer flex-1 min-w-0">
+              <input type="checkbox" id="chk-privacy" class="np-checkbox-input shrink-0" />
+              <span class="np-checkbox-label text-base text-neutral-800 leading-relaxed">
+                <span class="text-primary-500 font-semibold">[필수]</span> 개인정보 처리방침 동의
+              </span>
+            </label>
+            <button type="button" class="text-base text-neutral-400 underline underline-offset-2 shrink-0"
+              aria-label="개인정보 처리방침 보기">보기</button>
+          </div>
+
+          <!-- 마케팅 수신 동의 -->
+          <div class="flex items-center justify-between gap-2">
+            <label class="np-checkbox flex items-center gap-3 cursor-pointer flex-1 min-w-0">
+              <input type="checkbox" id="chk-marketing" class="np-checkbox-input shrink-0" />
+              <span class="np-checkbox-label text-base text-neutral-800 leading-relaxed">
+                <span class="text-neutral-500 font-medium">[선택]</span> 마케팅 정보 수신 동의
+              </span>
+            </label>
+            <button type="button" class="text-base text-neutral-400 underline underline-offset-2 shrink-0"
+              aria-label="마케팅 정보 수신 동의 보기">보기</button>
+          </div>
+
+        </div>
+
+        <button id="btn-agree" class="w-full np-btn np-btn-lg np-btn-primary mt-8" disabled>
           가입 완료
         </button>
       </div>
 
-      <!-- ╔══ Panel 4: 가입 완료 ══╗ -->
+      <!-- ╔══ Panel 5: 가입 완료 ══╗ -->
       <div id="p-success" class="hidden px-4 py-12 md:px-8 md:py-16 text-center">
         <div class="w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center mx-auto mb-6"
           aria-hidden="true">
@@ -293,18 +359,28 @@
       const btnSendOtp    = $('btn-send-otp');
       const btnResend     = $('btn-resend');
       const btnComplete   = $('btn-complete');
+      const btnAgree      = $('btn-agree');
       const btnGotoHome   = $('btn-goto-home');
 
       const pMethod   = $('p-method');
       const pAccount  = $('p-account');
       const pVerify   = $('p-verify');
+      const pTerms    = $('p-terms');
       const pSuccess  = $('p-success');
       const stepInd   = $('step-indicator');
       const s1Dot     = $('s1-dot');
       const s1Label   = $('s1-label');
       const s2Dot     = $('s2-dot');
       const s2Label   = $('s2-label');
-      const stepLine  = $('step-line');
+      const s3Dot     = $('s3-dot');
+      const s3Label   = $('s3-label');
+      const stepLine1 = $('step-line-1');
+      const stepLine2 = $('step-line-2');
+
+      const chkAll       = $('chk-all');
+      const chkService   = $('chk-service');
+      const chkPrivacy   = $('chk-privacy');
+      const chkMarketing = $('chk-marketing');
 
       const inpName      = $('inp-name');
       const inpId        = $('inp-id');
@@ -328,7 +404,7 @@
       let timerHandle = null;
       let otpSent = false;
 
-      const PANELS = { method: pMethod, account: pAccount, verify: pVerify, success: pSuccess };
+      const PANELS = { method: pMethod, account: pAccount, verify: pVerify, terms: pTerms, success: pSuccess };
 
       // ── Panel navigation ─────────────────────────────────────────
       function showPanel(name) {
@@ -337,14 +413,28 @@
 
         btnBack.style.visibility = (name === 'method' || name === 'success') ? 'hidden' : 'visible';
 
-        if (name === 'account' || name === 'verify') {
+        if (name === 'account' || name === 'verify' || name === 'terms') {
           stepInd.classList.remove('hidden');
-          const isAccount = name === 'account';
-          s1Dot.className   = `w-8 h-8 rounded-full flex items-center justify-center text-base font-bold ${isAccount ? 'bg-primary-500 text-neutral-0' : 'bg-primary-100 text-primary-500'}`;
-          s1Label.className = `text-xs font-medium ${isAccount ? 'text-primary-500' : 'text-primary-300'}`;
-          s2Dot.className   = `w-8 h-8 rounded-full flex items-center justify-center text-base font-bold ${!isAccount ? 'bg-primary-500 text-neutral-0' : 'bg-neutral-200 text-neutral-400'}`;
-          s2Label.className = `text-xs font-medium ${!isAccount ? 'text-primary-500' : 'text-neutral-400'}`;
-          stepLine.className = `flex-1 h-px mt-4 mx-3 ${!isAccount ? 'bg-primary-300' : 'bg-neutral-200'}`;
+          const step = name === 'account' ? 1 : name === 'verify' ? 2 : 3;
+
+          const dotClass   = (state) => `w-8 h-8 rounded-full flex items-center justify-center text-base font-bold ${
+            state === 'active'    ? 'bg-primary-500 text-neutral-0' :
+            state === 'done'      ? 'bg-primary-100 text-primary-500' :
+                                    'bg-neutral-200 text-neutral-400'}`;
+          const labelClass = (state) => `text-xs font-medium ${
+            state === 'active'    ? 'text-primary-500' :
+            state === 'done'      ? 'text-primary-300' :
+                                    'text-neutral-400'}`;
+          const lineClass  = (active) => `flex-1 h-px mt-4 mx-2 ${active ? 'bg-primary-300' : 'bg-neutral-200'}`;
+
+          s1Dot.className   = dotClass(step === 1 ? 'active' : 'done');
+          s1Label.className = labelClass(step === 1 ? 'active' : 'done');
+          s2Dot.className   = dotClass(step === 2 ? 'active' : step > 2 ? 'done' : 'inactive');
+          s2Label.className = labelClass(step === 2 ? 'active' : step > 2 ? 'done' : 'inactive');
+          s3Dot.className   = dotClass(step === 3 ? 'active' : 'inactive');
+          s3Label.className = labelClass(step === 3 ? 'active' : 'inactive');
+          stepLine1.className = lineClass(step >= 2);
+          stepLine2.className = lineClass(step >= 3);
         } else {
           stepInd.classList.add('hidden');
         }
@@ -356,6 +446,7 @@
       btnBack.addEventListener('click', () => {
         if (cur === 'account') showPanel('method');
         if (cur === 'verify')  { stopTimer(); showPanel('account'); }
+        if (cur === 'terms')   showPanel('verify');
       });
 
       // ── Social ───────────────────────────────────────────────────
@@ -494,7 +585,7 @@
         btnComplete.disabled = e.target.value.length !== 6;
       });
 
-      // 가입 완료
+      // 인증번호 확인 → 약관 동의 패널로 이동
       btnComplete.addEventListener('click', () => {
         // Demo: 000000은 오류 처리, 나머지 6자리는 인증 성공
         if (inpOtp.value === '000000') {
@@ -503,12 +594,54 @@
           return;
         }
         stopTimer();
-        showPanel('success');
+        // 약관 체크박스 초기화
+        chkAll.checked = false;
+        chkService.checked = false;
+        chkPrivacy.checked = false;
+        chkMarketing.checked = false;
+        btnAgree.disabled = true;
+        showPanel('terms');
       });
+
+      // 약관 동의 로직
+      function updateAgreeBtn() {
+        btnAgree.disabled = !(chkService.checked && chkPrivacy.checked);
+      }
+
+      function syncAllCheck() {
+        const allRequired = chkService.checked && chkPrivacy.checked;
+        chkAll.checked = allRequired && chkMarketing.checked;
+        chkAll.indeterminate = allRequired && !chkMarketing.checked;
+      }
+
+      chkAll.addEventListener('change', () => {
+        const checked = chkAll.checked;
+        chkService.checked = checked;
+        chkPrivacy.checked = checked;
+        chkMarketing.checked = checked;
+        chkAll.indeterminate = false;
+        updateAgreeBtn();
+      });
+
+      [chkService, chkPrivacy, chkMarketing].forEach(chk => {
+        chk.addEventListener('change', () => {
+          syncAllCheck();
+          updateAgreeBtn();
+        });
+      });
+
+      // 가입 완료
+      btnAgree.addEventListener('click', () => showPanel('success'));
 
       btnGotoHome.addEventListener('click', () => {
         window.location.href = 'index.html';
       });
+
+      // ── Dev 단축키: URL 해시로 패널 바로 이동 ─────────────────────
+      // 예) index.html#terms, index.html#verify, index.html#account
+      const devPanels = ['account', 'verify', 'terms'];
+      const initHash = location.hash.slice(1);
+      if (devPanels.includes(initHash)) showPanel(initHash);
 
       // ── Timer ────────────────────────────────────────────────────
       function startTimer() {
